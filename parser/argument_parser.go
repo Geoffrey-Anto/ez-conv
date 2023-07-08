@@ -24,6 +24,10 @@ func Parse_Arguments(args []string) (Args, error) {
 		return Args{}, fmt.Errorf("invalid arguments usage: go run main.go -f <from> -t <to> <inputfiles...>")
 	}
 
+	if len(flag.Args()) == 0 {
+		return Args{}, fmt.Errorf("no input files specified")
+	}
+
 	err := utils.ValidateFromAndTo(*fromFlag, *toFlag)
 
 	if err != nil {

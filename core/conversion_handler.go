@@ -12,7 +12,7 @@ func Convert(args parser.Args) error {
 	from := args.FromType
 	to := args.ToType
 
-	s := utils.GetSpinner(spinner.CharSets[35], 2*time.Second, "  Converting files from "+from+" to "+to+"...")
+	s := utils.GetSpinner(spinner.CharSets[35], 2*time.Second, "  Converting files from "+from+" to "+to+"...", "  Conversion complete!\n")
 	s.Start()
 
 	// TODO: Implement conversion logic here

@@ -9,8 +9,9 @@ import (
 )
 
 func Run(args parser.Args) error {
-	fmt.Println("Welcome to ez-convert! Please wait while we convert your files...")
-	fmt.Println("Press y to continue, or any other key to abort.")
+	colors := utils.Colors{}
+	fmt.Println(string(colors.Purple()), " Welcome to ez-convert! Please wait while we convert your files...")
+	fmt.Print(string(colors.Reset()), " Press y to continue, or any other key to abort.  ")
 
 	if !utils.CanProceed() {
 		fmt.Println("Conversion aborted.")

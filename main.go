@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/geoffrey-anto/ez-convert/app"
 	"github.com/geoffrey-anto/ez-convert/config"
 	"github.com/geoffrey-anto/ez-convert/parser"
+	"github.com/geoffrey-anto/ez-convert/utils"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 	args, err := parser.Parse_Arguments(os.Args[1:])
 
 	if err != nil {
-		log.Fatal(err)
+		utils.FatalLog(err)
 	}
 
 	if config.IsDebug() {
@@ -27,6 +27,6 @@ func main() {
 	err = app.Run(args)
 
 	if err != nil {
-		log.Fatal(err)
+		utils.FatalLog(err)
 	}
 }
