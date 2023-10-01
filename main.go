@@ -1,56 +1,32 @@
 package main
 
 import (
-	"ez-convert/utils"
+	"fmt"
 	"os"
+
+	"github.com/geoffrey-anto/ez-convert/app"
+	"github.com/geoffrey-anto/ez-convert/config"
+	"github.com/geoffrey-anto/ez-convert/parser"
+	"github.com/geoffrey-anto/ez-convert/utils"
 )
 
 func main() {
-	args := os.Args[1:]
 
-	if len(args) != 2 {
-		panic("Invalid number of arguments")
+	args, err := parser.Parse_Arguments(os.Args[1:])
+
+	if err != nil {
+		utils.FatalLog(err)
 	}
 
-	inputFile := args[0]
-	outputFile := args[1]
-
-	inputFileType, errInput := utils.GetTypeFromFilename(inputFile)
-	outputFileType, errOutput := utils.GetTypeFromFilename(outputFile)
-
-	if errInput != nil || errOutput != nil {
-		panic("Invalid file type")
+	if config.IsDebug() {
+		fmt.Println("Input Type: ", args.FromType)
+		fmt.Println("Output Type: ", args.ToType)
+		fmt.Println("Input File: ", args.Inputs)
 	}
 
-	if inputFileType == outputFileType {
-		panic("Input and output file types are same")
-	}
+	err = app.Run(args)
 
-	switch inputFileType {
-	case ".odt":
-		switch outputFileType {
-		case ".pdf":
-			utils.Convert_ODT_2_PDF(inputFile, outputFile)
-		default:
-			panic("Invalid output file type")
-
-		}
-	case ".pdf":
-		switch outputFileType {
-		case ".odt":
-			utils.Convert_PDF_2_ODT(inputFile, outputFile)
-		default:
-			panic("Invalid output file type")
-		}
-	case ".pptx":
-		switch outputFileType {
-		case ".pdf":
-			utils.PPT_2_PDF(inputFile, outputFile)
-		default:
-			panic("Invalid output file type")
-		}
-	default:
-		panic("Invalid input file type")
-
+	if err != nil {
+		utils.FatalLog(err)
 	}
 }
