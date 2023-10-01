@@ -17,7 +17,10 @@ func Run(args parser.Args) error {
 		fmt.Println("Conversion aborted.")
 		return fmt.Errorf("conversion aborted")
 	} else {
-		core.Convert(args)
+		err := core.Convert(args)
+		if err != nil {
+			return err
+		}
 		return nil
 	}
 }
